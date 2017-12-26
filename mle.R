@@ -1,3 +1,4 @@
+# true value is 0.8, -0.5, -0.25
 robust_norm_censored_4 <- read_csv("~/Desktop/2017_Aterm/卒論/code/robust_norm_censored_4.csv")
 data <- robust_norm_censored_4
 library(stats4)
@@ -22,6 +23,36 @@ br2 <- function(beta1, beta2, delta){
   return(-sum(logl))
 }
 
-# optimization
-oppai <- optim(c(1,-1,-0.5),br1,hessian = F, method = "Nelder-Mead")
+# br mle optimization
+# 真の値からやる
+result1 <- optim(c(0.8,-0.5,-0.25),br1,hessian = F, method = "Nelder-Mead")
 result2 <- mle2(br2, start = list(beta1 = 1, beta2 = -1, delta = -0.5),method = "Nelder-Mead")
+
+
+# Robust est nonlinear
+pop = data[["Pop"]]
+dist1 = data[["Dist1"]]
+dist2 = data[["Dist2"]]
+diff = data[["diff"]]
+result3 <- nls(diff ~ pnorm(-pop*beta1-dist1*beta2)*pnorm(-pop*beta1-dist2*beta2)- 
+      pnorm(pop*beta1+dist1*beta2+delta)*pnorm(pop*beta1+dist2*beta2+delta),
+    start=list(beta1=0.8, beta2=-0.5,delta=-0.25))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
