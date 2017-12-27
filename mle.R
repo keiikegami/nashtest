@@ -43,7 +43,15 @@ result3 <- nls(diff ~ pnorm(-pop*beta1-dist1*beta2)*pnorm(-pop*beta1-dist2*beta2
 # →自分で書きましょう。（推定値は得られるけど、結局漸近分散に二階微分必要だから別にそっちで求めてもいいか）
 
 
+# GLM
+market <- read_csv("~/Desktop/2017_Aterm/卒論/code/market.csv")
+num <- market[["realized_entry"]]
+dist1 <- market[["Dist1"]]
+dist2 <-market[["Dist2"]]
+pop <- market[["Pop"]]
+result <- glm(num ~ dist1 + dist2 + pop, data = market[market$realized_entry == 0,], family = poisson)
 
+d0 <- market[market$realized_entry == 0,]
 
 
 
