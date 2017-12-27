@@ -39,6 +39,9 @@ result3 <- nls(diff ~ pnorm(-pop*beta1-dist1*beta2)*pnorm(-pop*beta1-dist2*beta2
     start=list(beta1=0.8, beta2=-0.5,delta=-0.25))
 
 
+# Hausmanはpanelとかそういうのに最適化されたパッケージだから、既存のパッケージではできない。
+# →自分で書きましょう。（推定値は得られるけど、結局漸近分散に二階微分必要だから別にそっちで求めてもいいか）
+
 
 
 
